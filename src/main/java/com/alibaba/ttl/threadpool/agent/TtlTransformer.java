@@ -36,7 +36,7 @@ public class TtlTransformer implements ClassFileTransformer {
 
     private final List<JavassistTransformlet> transformletList = new ArrayList<JavassistTransformlet>();
 
-    TtlTransformer(List<? extends JavassistTransformlet> transformletList) {
+    public TtlTransformer(List<? extends JavassistTransformlet> transformletList) {
         for (JavassistTransformlet transformlet : transformletList) {
             this.transformletList.add(transformlet);
             logger.info("[TtlTransformer] add Transformlet " + transformlet.getClass() + " success");
