@@ -19,7 +19,8 @@ public abstract class Logger {
 
     public static void setLoggerImplType(String type) {
         if (loggerImplType != -1) {
-            throw new IllegalStateException("TTL logger implementation type is already set! type = " + loggerImplType);
+            //throw new IllegalStateException("TTL logger implementation type is already set! type = " + loggerImplType);
+            return;
         }
 
         if (STDERR.equalsIgnoreCase(type)) {

@@ -129,9 +129,14 @@ public final class TtlAgent {
 
         Logger.setLoggerImplType(getLogImplTypeFromAgentArgs(kvs));
         final Logger logger = Logger.getLogger(TtlAgent.class);
-        if (ttlAgentLoaded) {
-            logger.info("attempting to load TtlAgent more than once");
-            return;
+        synchronized (TtlAgent.class) {
+            if (firstBlood) {
+                firstBlood = false;
+                System.setProperty("TTL_AGENT_LOADED", Boolean.TRUE.toString());
+            } else {
+                logger.info("attempting to load Byteman agent more than once");
+                return;
+            }
         }
         try {
             logger.info("[TtlAgent.premain] begin, agentArgs: " + agentArgs + ", Instrumentation: " + inst);
@@ -169,7 +174,7 @@ public final class TtlAgent {
     private static volatile Map<String, String> kvs;
 
     private static volatile boolean ttlAgentLoaded = false;
-
+    private static volatile boolean firstBlood = true;
     /**
      * Whether TTL agent is loaded.
      *
