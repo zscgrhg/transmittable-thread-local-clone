@@ -134,7 +134,7 @@ public final class TtlAgent {
                 firstBlood = false;
                 System.setProperty("TTL_AGENT_LOADED", Boolean.TRUE.toString());
             } else {
-                logger.info("attempting to load Byteman agent more than once");
+                logger.info("attempting to load TtlAgent more than once");
                 return;
             }
         }
