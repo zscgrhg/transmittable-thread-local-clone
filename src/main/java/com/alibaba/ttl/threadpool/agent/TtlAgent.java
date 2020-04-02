@@ -5,9 +5,9 @@ import com.alibaba.ttl.threadpool.agent.internal.transformlet.JavassistTransform
 import com.alibaba.ttl.threadpool.agent.internal.transformlet.impl.TtlExecutorTransformlet;
 import com.alibaba.ttl.threadpool.agent.internal.transformlet.impl.TtlForkJoinTransformlet;
 import com.alibaba.ttl.threadpool.agent.internal.transformlet.impl.TtlTimerTaskTransformlet;
-
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
+
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.Instrumentation;
 import java.util.ArrayList;
@@ -124,11 +124,15 @@ public final class TtlAgent {
      * @see Logger#STDOUT
      */
     public static void premain(String agentArgs, @NonNull Instrumentation inst) {
+
         kvs = splitCommaColonStringToKV(agentArgs);
 
         Logger.setLoggerImplType(getLogImplTypeFromAgentArgs(kvs));
         final Logger logger = Logger.getLogger(TtlAgent.class);
-
+        if (ttlAgentLoaded) {
+            logger.info("attempting to load TtlAgent more than once");
+            return;
+        }
         try {
             logger.info("[TtlAgent.premain] begin, agentArgs: " + agentArgs + ", Instrumentation: " + inst);
             final boolean disableInheritableForThreadPool = isDisableInheritableForThreadPool();
