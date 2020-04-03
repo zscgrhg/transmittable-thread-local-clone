@@ -130,8 +130,8 @@ public final class TtlAgent {
         Logger.setLoggerImplType(getLogImplTypeFromAgentArgs(kvs));
         final Logger logger = Logger.getLogger(TtlAgent.class);
         synchronized (TtlAgent.class) {
-            if (firstBlood) {
-                firstBlood = false;
+            if (firstLoad) {
+                firstLoad = false;
                 System.setProperty("TTL_AGENT_LOADED", Boolean.TRUE.toString());
             } else {
                 logger.info("attempting to load TtlAgent more than once");
@@ -174,7 +174,7 @@ public final class TtlAgent {
     private static volatile Map<String, String> kvs;
 
     private static volatile boolean ttlAgentLoaded = false;
-    private static volatile boolean firstBlood = true;
+    private static volatile boolean firstLoad = true;
     /**
      * Whether TTL agent is loaded.
      *
