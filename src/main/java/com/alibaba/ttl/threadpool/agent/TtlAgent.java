@@ -174,7 +174,7 @@ public final class TtlAgent {
     private static volatile Map<String, String> kvs;
 
     private static volatile boolean ttlAgentLoaded = false;
-    private static volatile boolean firstLoad = true;
+    public static volatile boolean firstLoad = true;
     /**
      * Whether TTL agent is loaded.
      *
